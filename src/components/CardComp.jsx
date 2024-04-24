@@ -1,25 +1,38 @@
+import { useTodo } from "@/contexts";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "./ui/card";
+import { TodoForm, TodoItem } from "./index";
 
 function CardComp() {
+  const { todos } = useTodo();
+
+  console.log("todos from cardcomp>>", todos);
+
   return (
-    <Card className="w-1/2 bg-neutral-800 text-white">
+    <Card className="sm-w-[100%] md-[100%] bg-neutral-800 text-white">
       <CardHeader>
         <CardTitle className="text-center">Advance Todo</CardTitle>
-        <CardDescription>Card Description</CardDescription>
+        <TodoForm />
       </CardHeader>
       <CardContent>
-        <p>Card Content</p>
+        {todos && todos.length > 0 ? (
+          todos.map((todo) => (
+            <>
+              <TodoItem key={todo.id} todo={todo} />
+            </>
+          ))
+        ) : (
+          <p className="text-yellow-400 text-center">
+            no todo add a new todo item{" "}
+          </p>
+        )}
       </CardContent>
-      <CardFooter>
-        <p>Card Footer</p>
-      </CardFooter>
+      <CardFooter></CardFooter>
     </Card>
   );
 }
